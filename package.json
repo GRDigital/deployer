@@ -35,6 +35,6 @@
     "lint": "npm run lint:flow && npm run lint:eslint",
     "lint:eslint": "eslint \"src/**/*.js\" \"src/**/*.jsx\"",
     "lint:flow": "flow",
-    "start": "babel-node src/server/index.js"
+    "start": "babel-node src/index.js"
   }
 }
