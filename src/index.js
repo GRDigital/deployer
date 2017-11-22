@@ -13,6 +13,8 @@ fs.ensureDir(releases);
 console.log("exists?", fs.pathExistsSync(repo));
 
 if (fs.pathExistsSync(repo)) {
+	cp.execSync(`git fetch`, { cwd: repo });
+	cp.execSync(`git checkout ${config.branch}`, { cwd: repo });
 	cp.execSync(`git pull`, { cwd: repo });
 } else {
 	cp.execSync(`git clone -b ${config.branch} ${config.git} source`, { cwd: config.folder });
