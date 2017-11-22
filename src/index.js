@@ -21,9 +21,9 @@ const exec = (cmd, cwd) => {
 };
 
 if (fs.pathExistsSync(repo)) {
-	exec(`git fetch`, repo);
-	exec(`git checkout ${config.branch}`, repo);
-	exec(`git pull`, repo);
+	exec(`git fetch origin ${config.branch}`, repo);
+	exec(`git reset --hard FETCH_HEAD`, repo);
+	exec(`git clean -df`, repo);
 } else {
 	exec(`git clone -b ${config.branch} ${config.git} source`, config.folder);
 }
