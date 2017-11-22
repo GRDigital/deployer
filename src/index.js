@@ -22,8 +22,16 @@ if (fs.pathExistsSync(repo)) {
 fs.copySync(repo, workspace, { filter: (src, dest) => src.match(/\.git/) === null });
 cp.execSync(config.build, { cwd: workspace });
 
-let i = 0;
-while (fs.pathExistsSync(`${releases}/${i}`)) i += 1;
-fs.moveSync(workspace, `${releases}/${i}`);
+const now = (new Date()).toISOString().replace(/:/g, "-");
+const lastRelease = `${releases}/${now}`;
+const current = `${releases}/current`;
 
-cp.execSync(config.start, { cwd: `${releases}/${i}` });
+fs.moveSync(workspace, lastRelease);
+fs.ensureSymlinkSync(lastRelease, current);
+
+if (fs.pathExistsSync(`${releases}/naught.ipc`)) {
+	cp.execSync(`naught deploy --cwd ${lastRelease}`, { cwd: releases });
+} else {
+	cp.execSync(`naught start --cwd ${lastRelease} ${current}/${config.start}`, { cwd: releases });
+}
+cp.execSync(config.start, { cwd: lastRelease });
