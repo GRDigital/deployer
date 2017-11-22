@@ -2,15 +2,12 @@ import fs from "fs-extra";
 import cp from "child_process";
 
 const config = eval(fs.readFileSync(process.argv[2]).toString());
-console.log(config);
 
 fs.ensureDir(config.folder);
 const repo = `${config.folder}/source`;
 const workspace = `${config.folder}/workspace`;
 const releases = `${config.folder}/releases`;
 fs.ensureDir(releases);
-
-console.log("exists?", fs.pathExistsSync(repo));
 
 if (fs.pathExistsSync(repo)) {
 	cp.execSync(`git fetch`, { cwd: repo });
