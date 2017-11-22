@@ -31,4 +31,3 @@ if (fs.pathExistsSync(`${releases}/naught.ipc`)) {
 } else {
 	cp.execSync(`naught start --cwd ${lastRelease} ${current}/${config.start}`, { cwd: releases });
 }
-cp.execSync(config.start, { cwd: lastRelease });
