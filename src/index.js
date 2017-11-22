@@ -24,7 +24,7 @@ const lastRelease = `${releases}/${now}`;
 const current = `${releases}/current`;
 
 fs.moveSync(workspace, lastRelease);
-fs.ensureSymlinkSync(lastRelease, current);
+cp.execSync(`ln -sf ${lastRelease} ${current}`);
 
 if (fs.pathExistsSync(`${releases}/naught.ipc`)) {
 	cp.execSync(`naught deploy --cwd ${lastRelease}`, { cwd: releases });
