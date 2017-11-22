@@ -17,7 +17,7 @@ if (fs.pathExistsSync(repo)) {
 } else {
 	cp.execSync(`git clone -b ${config.branch} ${config.git} source`, { cwd: config.folder });
 }
-fs.copySync(repo, workspace, { filter: (src, dest) => src.match(/\.git/) !== null });
+fs.copySync(repo, workspace, { filter: (src, dest) => src.match(/\.git/) === null });
 cp.execSync(config.build, { cwd: workspace });
 
 let i = 0;
