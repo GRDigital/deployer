@@ -2,6 +2,7 @@
   "name": "@grd/deployer",
   "version": "0.0.1",
   "access": "public",
+  "bin": "lib/index.js",
   "dependencies": {
     "fs-extra": "4.0.2"
   },
