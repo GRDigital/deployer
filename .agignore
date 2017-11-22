@@ -1,0 +1,8 @@
+/node_modules/
+/flow-typed/npm/
+/lib/
+npm-debug.log
+/.idea/
+/npm-debug*
+*.hot-update.*
+.DS_Store

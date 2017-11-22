@@ -1,0 +1,27 @@
+[include]
+src/
+
+[ignore]
+<PROJECT_ROOT>/node_modules/
+<PROJECT_ROOT>/lib/
+
+[libs]
+flow-typed/
+decls/
+
+[lints]
+all=warn
+
+[options]
+all=true
+module.use_strict=true
+module.system.node.resolve_dirname=src
+module.system.node.resolve_dirname=node_modules
+include_warnings=true
+experimental.const_params=true
+suppress_type=$FlowTODO
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+suppress_comment= \\(.\\|\n\\)*\\$FlowBug
+
+[version]
+0.59.0
