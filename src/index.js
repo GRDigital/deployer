@@ -9,25 +9,34 @@ const workspace = `${config.folder}/workspace`;
 const releases = `${config.folder}/releases`;
 fs.ensureDir(releases);
 
+const exec = (cmd, cwd) => {
+	if (cwd) {
+		console.log(`${cwd} -> ${cmd}`);
+		cp.execSync(cmd, { cwd });
+	} else {
+		console.log(cmd);
+		cp.execSync(cmd);
+	}
+};
+
 if (fs.pathExistsSync(repo)) {
-	cp.execSync(`git fetch`, { cwd: repo });
-	cp.execSync(`git checkout ${config.branch}`, { cwd: repo });
-	cp.execSync(`git pull`, { cwd: repo });
+	exec(`git fetch`, repo);
+	exec(`git checkout ${config.branch}`, repo);
+	exec(`git pull`, repo);
 } else {
-	cp.execSync(`git clone -b ${config.branch} ${config.git} source`, { cwd: config.folder });
+	exec(`git clone -b ${config.branch} ${config.git} source`, config.folder);
 }
 fs.copySync(repo, workspace, { filter: (src, dest) => src.match(/\.git/) === null });
-cp.execSync(config.build, { cwd: workspace });
+exec(config.build, workspace);
 
 const now = (new Date()).toISOString().replace(/:/g, "-");
 const lastRelease = `${releases}/${now}`;
-const current = `${releases}/current`;
 
 fs.moveSync(workspace, lastRelease);
-cp.execSync(`ln -sf ${lastRelease} ${current}`);
+exec(`ln -sfn ${now} current`, releases);
 
 if (fs.pathExistsSync(`${releases}/naught.ipc`)) {
-	cp.execSync(`naught deploy --cwd ${lastRelease}`, { cwd: releases });
+	exec(`naught deploy --cwd ${now}`, releases);
 } else {
-	cp.execSync(`naught start --cwd ${lastRelease} ${current}/${config.start}`, { cwd: releases });
+	exec(`naught start --cwd ${now} current/${config.start}`, releases);
 }
