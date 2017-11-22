@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from "fs-extra";
 import cp from "child_process";
 
