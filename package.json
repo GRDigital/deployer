@@ -1,6 +1,6 @@
 {
-  "name": "@grd/deployer",
-  "version": "0.0.1",
+  "name": "grd-deployer",
+  "version": "0.0.2",
   "access": "public",
   "bin": "lib/index.js",
   "dependencies": {
@@ -36,7 +36,7 @@
     "lint": "npm run lint:flow && npm run lint:eslint",
     "lint:eslint": "eslint \"src/**/*.js\" \"src/**/*.jsx\"",
     "lint:flow": "flow",
-    "prepublish": "npm run compile",
+    "prepublishOnly": "npm run compile",
     "start": "babel-node src/index.js"
   }
 }
